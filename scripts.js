@@ -34,6 +34,7 @@ mathBtn.forEach(btn => {
     });
   });
 });
+
 clearBtn.addEventListener('click', () => {
   expression.value = ''; 
   result.value = '';
