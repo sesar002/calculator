@@ -70,3 +70,16 @@ body {
 .bracket {
   background-color: #4f5962;
 }
+.disabled {
+  animation: disabledAdded 0.5s linear forwards;
+  cursor: default;
+}
+
+@keyframes disabledAdded {
+  0% {
+    background-color: #4f5962;
+  }
+  100% {
+    background-color: #9eadbb;
+  }
+}
