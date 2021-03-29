@@ -2,23 +2,41 @@ const numBtn = document.querySelectorAll('.num');
 const clearBtn = document.querySelector('.clear');
 const equalBtn = document.querySelector('.equal');
 const mathBtn = document.querySelectorAll('.math-operation');
-const rightBracket = document.getElementById('left');
+const leftBracket = document.getElementById('left');
+const rightBracket = document.getElementById('right');
 
 const expression = document.querySelector('.expression');
 const result = document.querySelector('.result');
 
 let apiExpression = '';
 
+
+
+const btnEnable = () => {
+  mathBtn.forEach(btn => {
+    btn.disabled = false;
+    btn.classList.remove('disabled');
+  });
+  equalBtn.disabled = false;
+  equalBtn.classList.remove('disabled');
+};
+
+const btnDisable = () => {
+  mathBtn.forEach(btn => {
+    btn.disabled = true;
+    btn.classList.add('disabled');
+  });
+  equalBtn.disabled = true;
+  equalBtn.classList.add('disabled');
+}
+
 numBtn.forEach(btn => {
   const btnValue = btn.getAttribute('value');
   const btnText = btn.innerHTML;
   btn.addEventListener('click', () => {
-    apiExpression = apiExpression + btnValue;
+    apiExpression += btnValue;
     expression.value += btnText;
-    mathBtn.forEach(btn => {
-      btn.disabled = false;
-      btn.classList.remove('disabled');
-    });
+    btnEnable();
   });
 });
 
@@ -28,10 +46,7 @@ mathBtn.forEach(btn => {
   btn.addEventListener('click', () => {
     apiExpression += btnValue;
     expression.value += btnText;
-    mathBtn.forEach(btn => {
-      btn.disabled = true;
-      btn.classList.add('disabled');
-    });
+    btnDisable();
   });
 });
 
@@ -39,10 +54,7 @@ clearBtn.addEventListener('click', () => {
   expression.value = ''; 
   result.value = '';
   apiExpression = '';
-  mathBtn.forEach(btn => {
-    btn.disabled = false;
-    btn.classList.remove('disabled');
-  });
+  btnEnable();
 });
 
 equalBtn.addEventListener('click', () => {
@@ -51,7 +63,11 @@ equalBtn.addEventListener('click', () => {
   const xhr = new XMLHttpRequest
   xhr.open('GET', url, true);
   xhr.onload = () => {
-    result.value = xhr.response;
+    if(xhr.status === 200) {
+      result.value = xhr.response;
+    }else {
+      result.value = 'ERROR';
+    }
   }
   xhr.send();
 })
